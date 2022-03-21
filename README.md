@@ -1,5 +1,8 @@
 **Commands:**
 
+**Start the localstack container for Lambda and S3:**
+`docker-compose up`
+
 **Build and zip the task code:**
 ```shell
 GOOS=linux go build -o bin/task && rm -f task.zip && zip -j task.zip bin/task 
@@ -27,8 +30,7 @@ aws --endpoint-url=http://localhost:4566 lambda get-function --function-name tas
 
 **Create S3 bucket in/on Localstack:**
 ```shell
-aws s3 mb s3://tinkleton --region us-west-2 \
---endpoint-url=http://localhost:4566 
+aws s3 mb s3://zapp --region us-west-2 --endpoint-url=http://localhost:4566 
 ```
 
 **List S3 buckets:**
@@ -38,7 +40,7 @@ aws --endpoint-url=http://localhost:4566 s3api list-buckets
 
 **Configure the S3 bucket to publish s3:ObjectCreated events:**
 ```shell
-aws s3api put-bucket-notification-configuration --bucket tinkleton \
+aws s3api put-bucket-notification-configuration --bucket zapp \
 --notification-configuration file://test_data/notification.json \
 --endpoint-url http://localhost:4566
 ```
@@ -46,14 +48,14 @@ aws s3api put-bucket-notification-configuration --bucket tinkleton \
 **Confirm the existence of the above notification configuration:**
 ```shell
 aws s3api get-bucket-notification-configuration \
---bucket tinkleton --endpoint-url http://localhost:4566
+--bucket zapp --endpoint-url http://localhost:4566
 ```
 
 **Copy a file to S3 bucket on Localstack:**
 ```shell
-aws s3 cp styx_van.jpg s3://tinkleton --endpoint-url http://localhost:4566
+aws s3 cp styx_van.jpg s3://zapp --endpoint-url http://localhost:4566
 ```
-
+Boo. Doesn't work. Doesn't seem to work for anybody yet.
 
 **Invoke the Lambda function, passing it a JSON payload:**
 ```shell
