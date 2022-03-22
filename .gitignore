@@ -1,8 +1,6 @@
 .idea
 .localstack
 .vscode
-# Test binary, built with `go test -c`
 *.test
 *.log
-*.zip
-/bin/
+bin/

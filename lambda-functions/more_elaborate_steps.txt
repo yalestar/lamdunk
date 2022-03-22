@@ -1,0 +1,29 @@
+
+GOOS=linux go build -o bin/mungo && rm -f task.zip && zip -j bin/mungo.zip bin/mungo
+
+aws s3 mb s3://ncpdp --region us-west-2 --endpoint-url=http://localhost:4566
+
+aws s3 cp minimas.zip s3://ncpdp --endpoint-url=http://localhost:4566
+
+aws --endpoint-url=http://localhost:4566 s3 ls s3://ncpdp
+
+aws --endpoint-url=http://localhost:4566 s3api list-objects --bucket ncpdp
+
+aws --endpoint-url=http://localhost:4566 lambda create-function \
+--function-name=mungo --runtime="go1.x" \
+--role=fakerole --handler=mungo \
+--zip-file fileb://bin/mungo.zip
+
+aws lambda --endpoint-url=http://localhost:4566 invoke \
+--function-name mungo --payload file://ncpdpS3Event.json \
+--region=us-west-2 out.log
+
+
+aws --endpoint-url=http://localhost:4566 lambda update-function-code --function-name=mungo \
+--zip-file fileb://bin/mungo.zip
+
+aws s3api head-object --bucket ncpdp --key minimas.zip --endpoint-url=http://localhost:4566
+
+export AWS_ACCESS_KEY_ID=test
+export AWS_SECRET_ACCESS_KEY=test
+export AWS_REGION=us-west-2

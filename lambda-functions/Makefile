@@ -1,15 +1,15 @@
-HANDLER_NAME=task
+HANDLER_NAME=mungo
 BUILD_DIR=bin
-GOOS=${GOOS-linux}
-S3_EVENT_JSON=test_data/s3event.json
 
-restart_containers:
-	# in the foreground for demo purposes
-	docker-compose down -v
-	docker-compose up
+S3_EVENT_JSON=ncpdpS3Event.json
+
+make_bucket:
+	aws s3 mb s3://ncpdp --region us-west-2 --endpoint-url=http://localhost:4566 \
+    aws s3 cp minimas.zip s3://ncpdp --endpoint-url=http://localhost:4566
+#    aws s3api head-object --bucket ncpdp --key minimas.zip --endpoint-url=http://localhost:4566
 
 build_lambda_function: clean
-	go build -o ${BUILD_DIR}/${HANDLER_NAME}  && \
+	GOOS=linux go build -o ${BUILD_DIR}/${HANDLER_NAME}  && \
 	zip -j ${BUILD_DIR}/${HANDLER_NAME}.zip ${BUILD_DIR}/${HANDLER_NAME}
 
 deploy_lambda: build_lambda_function
@@ -21,7 +21,7 @@ deploy_lambda: build_lambda_function
 update_lambda: build_lambda_function
 	aws --endpoint-url=http://localhost:4566 lambda \
     update-function-code --function-name=${HANDLER_NAME} \
-    --zip-file fileb://${HANDLER_NAME}.zip
+    --zip-file fileb://${BUILD_DIR}/${HANDLER_NAME}.zip
 
 clean:
 	rm -vf ${BUILD_DIR}/${HANDLER_NAME}*

@@ -53,7 +53,7 @@ aws s3api get-bucket-notification-configuration \
 
 **Copy a file to S3 bucket on Localstack:**
 ```shell
-aws s3 cp styx_van.jpg s3://zapp --endpoint-url http://localhost:4566
+aws s3 cp test_data/styx_van.jpg s3://zapp --endpoint-url http://localhost:4566
 ```
 Boo. Doesn't work. Doesn't seem to work for anybody yet.
 
