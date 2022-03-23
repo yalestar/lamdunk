@@ -27,8 +27,8 @@
           "arn": "arn:aws:s3:::ncpdp"
         },
         "object": {
-          "key": "minimas.zip",
-          "size": 7737,
+          "key": "2021-10-29-NCPDP_Monthly_Master_20211001.zip",
+          "size": 182541,
           "eTag": "0123456789abcdef0123456789abcdef",
           "sequencer": "0A1B2C3D4E5F678901"
         }

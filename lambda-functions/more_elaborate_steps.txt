@@ -1,5 +1,5 @@
 
-GOOS=linux go build -o bin/mungo && rm -f task.zip && zip -j bin/mungo.zip bin/mungo
+GOOS=linux go build -o bin/mungo && zip -j bin/mungo.zip bin/mungo
 
 aws s3 mb s3://ncpdp --region us-west-2 --endpoint-url=http://localhost:4566
 

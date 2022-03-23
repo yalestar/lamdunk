@@ -1,6 +1,5 @@
 HANDLER_NAME=task
 BUILD_DIR=bin
-GOOS=${GOOS-linux}
 S3_EVENT_JSON=test_data/s3event.json
 
 restart_containers:

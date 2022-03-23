@@ -11,15 +11,15 @@ import (
 type SomeResponse struct {
     EventName   string `json:"event_name"`
     EventSource string `json:"event_source"`
-    Sentence    string `json:"chinese_name"`
+    ChineseName string `json:"chinese_name"`
 }
 
 func handleRequest(s3Event events.S3Event) (SomeResponse, error) {
     
-    sentence := faker.Sentence()
+    chineseName := faker.ChineseName()
     var resp SomeResponse
     for _, record := range s3Event.Records {
-        log.Printf("Chinese name: %s", sentence)
+        log.Printf("Chinese name: %s", chineseName)
         log.Printf("EVENT NAME: %s\n", record.EventName)
         log.Printf("EVENT SOURCE: %s\n", record.EventSource)
         log.Printf("BUCKET: %s", record.S3.Bucket)
@@ -29,7 +29,7 @@ func handleRequest(s3Event events.S3Event) (SomeResponse, error) {
         resp = SomeResponse{
             EventName:   record.EventName,
             EventSource: record.EventSource,
-            Sentence:    sentence,
+            ChineseName: chineseName,
         }
     }
     return resp, nil

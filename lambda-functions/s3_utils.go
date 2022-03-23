@@ -8,6 +8,19 @@ import (
     "log"
 )
 
+func listObjects(client s3.Client, bucketName string) (string, error) {
+    lip := s3.ListObjectsV2Input{Bucket: &bucketName}
+    lob, err := client.ListObjectsV2(context.TODO(), &lip)
+    if err != nil {
+        log.Println(err)
+    }
+    
+    for _, c := range lob.Contents {
+        log.Println(*c.Key)
+    }
+    return "yep", nil
+}
+
 func getS3Config(endpoint string) (aws.Config, error) {
     cfg, err := config.LoadDefaultConfig(
         context.TODO(),
