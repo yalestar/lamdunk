@@ -3,7 +3,7 @@ GOOS=linux go build -o bin/mungo && rm -f task.zip && zip -j bin/mungo.zip bin/m
 
 aws s3 mb s3://ncpdp --region us-west-2 --endpoint-url=http://localhost:4566
 
-aws s3 cp minimas.zip s3://ncpdp --endpoint-url=http://localhost:4566
+aws s3 cp 2021-10-29-NCPDP_Monthly_Master_20211001.zip s3://ncpdp --endpoint-url=http://localhost:4566
 
 aws --endpoint-url=http://localhost:4566 s3 ls s3://ncpdp
 

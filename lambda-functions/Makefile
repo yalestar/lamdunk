@@ -4,8 +4,9 @@ BUILD_DIR=bin
 S3_EVENT_JSON=ncpdpS3Event.json
 
 make_bucket:
-	aws s3 mb s3://ncpdp --region us-west-2 --endpoint-url=http://localhost:4566 \
-    aws s3 cp minimas.zip s3://ncpdp --endpoint-url=http://localhost:4566
+	aws s3 mb s3://ncpdp --region us-west-2 --endpoint-url=http://localhost:4566 && \
+    aws s3 cp 2021-10-29-NCPDP_Monthly_Master_20211001.zip \
+     s3://ncpdp --endpoint-url=http://localhost:4566
 #    aws s3api head-object --bucket ncpdp --key minimas.zip --endpoint-url=http://localhost:4566
 
 build_lambda_function: clean

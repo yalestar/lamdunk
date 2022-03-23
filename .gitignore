@@ -2,5 +2,6 @@
 .localstack
 .vscode
 *.test
+/*.zip
 *.log
 bin/

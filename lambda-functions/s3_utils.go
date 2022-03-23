@@ -8,7 +8,7 @@ import (
     "log"
 )
 
-func getS3Config() (aws.Config, error) {
+func getS3Config(endpoint string) (aws.Config, error) {
     cfg, err := config.LoadDefaultConfig(
         context.TODO(),
         config.WithEndpointResolverWithOptions(
@@ -17,7 +17,7 @@ func getS3Config() (aws.Config, error) {
                     aws.Endpoint, error,
                 ) {
                     return aws.Endpoint{
-                        URL: "http://localhost:4566",
+                        URL: endpoint,
                     }, nil
                 },
             ),
@@ -41,7 +41,6 @@ func getObject(client s3.Client, bucket, key string) (*s3.GetObjectOutput, error
     log.Printf("LOoking for %s in %s", key, bucketName)
     goi := s3.GetObjectInput{Bucket: &bucket, Key: &key}
     obj, err := client.GetObject(context.TODO(), &goi)
-    log.Printf("============what of %v", obj)
     if err != nil {
         log.Printf("============== ERROR UP IN THIS PIG")
         log.Println(err)
